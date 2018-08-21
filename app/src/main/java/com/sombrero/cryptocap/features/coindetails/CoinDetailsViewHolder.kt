@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sombrero.cryptocap.R
 import com.sombrero.cryptocap.common.CoinUtils
+import com.sombrero.cryptocap.extensions.formattedName
 import com.sombrero.cryptocap.extensions.symbolToIconId
 import com.sombrero.cryptomodel.ticker.TickerCoin
 
@@ -31,7 +32,7 @@ class CoinDetailsViewHolder(val view: View) {
     fun bindView(coin: TickerCoin) {
 
         iconView.setBackgroundResource(coin.symbolToIconId())
-        titleView.text = "${coin.name} (${coin.symbol})"
+        titleView.text = coin.formattedName()
         priceView.text = formatPriceText(view.context, coin)
         marketCapView.text = CoinUtils.formatAmount(coin.marketCapUSD, prefix = "$", postfix = "USD")
         volumeView.text = CoinUtils.formatAmount(coin.volumeUSD, prefix = "$", postfix = "USD")

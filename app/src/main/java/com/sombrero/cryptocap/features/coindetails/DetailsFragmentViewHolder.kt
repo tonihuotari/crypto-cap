@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import com.sombrero.cryptocap.R
+import com.sombrero.cryptocap.extensions.formattedName
 import com.sombrero.cryptocap.extensions.symbolToToolbarId
 import com.sombrero.cryptomodel.starred.StarredCoin
 import com.sombrero.cryptomodel.ticker.TickerCoin
@@ -38,7 +39,7 @@ class DetailsFragmentViewHolder(val view: View) {
 
     fun bindView(coin: TickerCoin) {
         collapsingImageView.setBackgroundResource(coin.symbolToToolbarId())
-        toolbarTitleView.text = "${coin.name} (${coin.symbol})"
+        toolbarTitleView.text = coin.formattedName()
     }
 
     private fun initCollapsingToolbar(context: Context,

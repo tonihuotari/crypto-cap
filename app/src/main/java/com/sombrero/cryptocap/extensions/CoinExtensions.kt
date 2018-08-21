@@ -16,6 +16,10 @@ fun TickerCoin.symbolToToolbarId(): Int {
     return coinSymbolToToolbarId(symbol)
 }
 
+fun TickerCoin.formattedName(): String {
+    return "$name ($symbol)"
+}
+
 private fun coinSymbolToIconId(symbol: String?): Int {
     return when (symbol) {
         "BTC" -> R.drawable.ic_coin_btc
