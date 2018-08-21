@@ -14,6 +14,11 @@ class CoinRepository private constructor(
         return LivePagedListBuilder(coinDao.getCoins(), 30)
     }
 
+    fun getCoins(filter: String): LivePagedListBuilder<Int, Coin> {
+        // Adding '%' to end of filter string in order to match names that start with the string
+        return LivePagedListBuilder(coinDao.getCoins("$filter%"), 30)
+    }
+
     fun updateCoins() {
         client.getCoinListing()
                 .subscribeOn(Schedulers.io())

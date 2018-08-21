@@ -8,6 +8,10 @@ fun Coin.symbolToIconId(): Int {
     return coinSymbolToIconId(symbol)
 }
 
+fun Coin.formattedName(): String {
+    return "$name ($symbol)"
+}
+
 fun TickerCoin.symbolToIconId(): Int {
     return coinSymbolToIconId(symbol)
 }

@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +40,24 @@ class CoinListingFragment : Fragment() {
         val factory = InjectorUtils.provideCoinListingViewModelFactory(context)
         viewModel = ViewModelProviders.of(this, factory).get(CoinListingViewModel::class.java)
 
+        val searchView = view.findViewById<SearchView>(R.id.coinListingSearchView)
         val recyclerView = view.findViewById<RecyclerView>(R.id.coinListingRecyclerView)
+
+        searchView.setIconifiedByDefault(false)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                // Do nothing
+                return false
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+                viewModel.onSearchText(text)
+                subscribeUi(adapter)
+                return true
+            }
+
+        })
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -49,7 +68,9 @@ class CoinListingFragment : Fragment() {
     }
 
     private fun subscribeUi(adapter: CoinListingPagedAdapter) {
+        Log.e(TAG, "subscribeUi")
         viewModel.getCoins().observe(viewLifecycleOwner, Observer { list ->
+            Log.e(TAG, "subscribeUi: submitlist")
             adapter.submitList(list)
         })
     }

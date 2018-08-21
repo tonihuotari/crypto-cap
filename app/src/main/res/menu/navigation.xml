@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/navigation_coinlisting"
-        android:icon="@drawable/ic_monetization_on_black_24dp"
-        android:title="@string/title_coinlisting" />
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/title_search" />
 
     <item
         android:id="@+id/navigation_notifications"

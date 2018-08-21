@@ -2,7 +2,7 @@
     <string name="app_name">CryptoCap</string>
 
     <string name="title_toplist">Top List</string>
-    <string name="title_coinlisting">Coins</string>
+    <string name="title_search">Search</string>
     <string name="title_starred">My watchlist</string>
 
     <string name="coinlisting_title">CoinMarketCap</string>

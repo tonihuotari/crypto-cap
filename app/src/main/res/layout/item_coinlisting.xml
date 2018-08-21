@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:padding="10dp">
+    android:layout_marginBottom="@dimen/common_padding"
+    android:layout_marginTop="@dimen/common_padding"
+    android:paddingEnd="@dimen/common_horizontal_margin"
+    android:paddingStart="@dimen/common_horizontal_margin">
 
     <ImageView
         android:id="@+id/coinListingItemIconView"
-        android:layout_width="@dimen/common_list_icon_size"
-        android:layout_height="@dimen/common_list_icon_size"
-        tools:background="@drawable/ic_coin_btc" />
+        android:layout_width="@dimen/common_list_icon_size_large"
+        android:layout_height="@dimen/common_list_icon_size_large"
+        tools:background="@drawable/ic_coin_placeholder" />
 
     <TextView
         android:id="@+id/coinListingItemTitleView"
@@ -20,16 +22,10 @@
         android:paddingStart="6dp"
         android:textColor="@color/black"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/coinListingItemIconView"
         app:layout_constraintLeft_toRightOf="@id/coinListingItemIconView"
+        app:layout_constraintTop_toTopOf="@id/coinListingItemIconView"
         tools:text="BTC" />
-
-    <TextView
-        android:id="@+id/coinListingItemNameView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="2dp"
-        app:layout_constraintTop_toBottomOf="@id/coinListingItemIconView"
-        tools:text="Coin name" />
 
 
 </android.support.constraint.ConstraintLayout>

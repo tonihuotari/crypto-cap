@@ -7,26 +7,24 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.sombrero.cryptocap.R
+import com.sombrero.cryptocap.extensions.formattedName
 import com.sombrero.cryptocap.extensions.symbolToIconId
 import com.sombrero.cryptomodel.coin.Coin
 
 class CoinListingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     val titleView = itemView.findViewById<TextView>(R.id.coinListingItemTitleView)
-    val nameView = itemView.findViewById<TextView>(R.id.coinListingItemNameView)
     val iconView = itemView.findViewById<ImageView>(R.id.coinListingItemIconView)
 
     fun onBind(coin: Coin?) {
 
         when (coin) {
             is Coin -> {
-                titleView.text = coin.symbol
-                nameView.text = coin.name
+                titleView.text = coin.formattedName()
                 iconView.setBackgroundResource(coin.symbolToIconId())
             }
             else -> {
                 titleView.text = "LOADING"
-                nameView.text = "LOADING"
                 iconView.setBackgroundResource(R.drawable.ic_coin_placeholder)
             }
         }
