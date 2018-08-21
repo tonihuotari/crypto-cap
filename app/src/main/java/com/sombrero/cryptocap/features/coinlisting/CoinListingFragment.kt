@@ -2,6 +2,7 @@ package com.sombrero.cryptocap.features.coinlisting
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,12 +17,20 @@ import com.sombrero.cryptocap.R
 import com.sombrero.cryptocap.common.ActivityNavigator
 import com.sombrero.cryptocap.common.InjectorUtils
 import com.sombrero.cryptocap.features.coinlisting.list.CoinListingPagedAdapter
+import com.sombrero.cryptomodel.coin.Coin
 
 class CoinListingFragment : Fragment() {
 
     lateinit var viewModel: CoinListingViewModel
 
     val adapter = CoinListingPagedAdapter()
+
+    private val listObserver: Observer<PagedList<Coin>> by lazy {
+        Observer<PagedList<Coin>> { list ->
+            Log.d(TAG, "listObserver: submitlist")
+            adapter.submitList(list)
+        }
+    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -52,8 +61,7 @@ class CoinListingFragment : Fragment() {
             }
 
             override fun onQueryTextChange(text: String?): Boolean {
-                viewModel.onSearchText(text)
-                subscribeUi(adapter)
+                subscribeUi(text)
                 return true
             }
 
@@ -62,17 +70,25 @@ class CoinListingFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        subscribeUi(adapter)
+        subscribeUi()
 
         return view
     }
 
-    private fun subscribeUi(adapter: CoinListingPagedAdapter) {
-        Log.e(TAG, "subscribeUi")
-        viewModel.getCoins().observe(viewLifecycleOwner, Observer { list ->
-            Log.e(TAG, "subscribeUi: submitlist")
-            adapter.submitList(list)
-        })
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unsubscribeUi()
+    }
+
+    private fun unsubscribeUi() {
+        viewModel.getCoins().removeObserver(listObserver)
+    }
+
+    private fun subscribeUi(filter: String? = null) {
+        unsubscribeUi()
+        viewModel.onSearchText(filter)
+
+        viewModel.getCoins().observe(viewLifecycleOwner, listObserver)
     }
 
     companion object {
