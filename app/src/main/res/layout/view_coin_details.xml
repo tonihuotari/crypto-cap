@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/common_vertical_margin"
+    android:paddingEnd="@dimen/common_horizontal_margin"
+    android:paddingStart="@dimen/common_horizontal_margin"
+    android:paddingTop="@dimen/common_vertical_margin">
+
+    <ImageView
+        android:id="@+id/detailsIconView"
+        android:layout_width="@dimen/details_icon_size"
+        android:layout_height="@dimen/details_icon_size"
+        tools:background="@drawable/ic_coin_btc" />
+
+    <TextView
+        android:id="@+id/detailsTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textsize_large"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/detailsIconView"
+        tools:text="Bitcoin (BTC)" />
+
+    <TextView
+        android:id="@+id/detailsPriceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/detailsTitleView"
+        tools:text="$7 705,07 USD" />
+
+    <TextView
+        android:id="@+id/detailsMarketCapTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/common_padding"
+        android:text="@string/common_marketcap"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/detailsPriceView" />
+
+    <TextView
+        android:id="@+id/detailsMarketCapView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/common_padding"
+        app:layout_constraintTop_toBottomOf="@id/detailsMarketCapTitleView"
+        tools:text="$123 123 123" />
+
+    <TextView
+        android:id="@+id/detailsVolumeTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/common_padding"
+        android:text="@string/common_volume_24h"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/detailsMarketCapView" />
+
+    <TextView
+        android:id="@+id/detailsVolumeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/common_padding"
+        app:layout_constraintTop_toBottomOf="@id/detailsVolumeTitleView"
+        tools:text="$123 123 123 USD" />
+
+    <TextView
+        android:id="@+id/detailsCirculatingSupplyTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/common_padding"
+        android:text="@string/commmon_circulating_supply"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/detailsVolumeView" />
+
+    <TextView
+        android:id="@+id/detailsCirculatingSupplyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/common_padding"
+        app:layout_constraintTop_toBottomOf="@id/detailsCirculatingSupplyTitleView"
+        tools:text="$123 123 123 USD" />
+
+    <TextView
+        android:id="@+id/detailsMaxSupplyTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/common_padding"
+        android:text="@string/commmon_max_supply"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/detailsCirculatingSupplyView" />
+
+    <TextView
+        android:id="@+id/detailsMaxSupplyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/common_padding"
+        app:layout_constraintTop_toBottomOf="@id/detailsMaxSupplyTitleView"
+        tools:text="$123 123 123 USD" />
+
+
+</android.support.constraint.ConstraintLayout>

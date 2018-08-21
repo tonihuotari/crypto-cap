@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/crypto-cap.iml" filepath="$PROJECT_DIR$/crypto-cap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cryptoclient/cryptoclient.iml" filepath="$PROJECT_DIR$/cryptoclient/cryptoclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cryptomodel/cryptomodel.iml" filepath="$PROJECT_DIR$/cryptomodel/cryptomodel.iml" />
     </modules>
   </component>
 </project>

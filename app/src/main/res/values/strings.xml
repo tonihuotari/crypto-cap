@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">CryptoCap</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="title_toplist">Top List</string>
+    <string name="title_coinlisting">Coins</string>
+    <string name="title_starred">My watchlist</string>
+
+    <string name="coinlisting_title">CoinMarketCap</string>
+
+    <string name="common_marketcap">Market Cap</string>
+    <string name="common_volume_24h">Volume (24h)</string>
+    <string name="commmon_circulating_supply">Circulating Supply</string>
+    <string name="commmon_max_supply">Max Supply</string>
+    <string name="common_price">Price</string>
+    <string name="common_change_24h">Change (24h)</string>
 </resources>

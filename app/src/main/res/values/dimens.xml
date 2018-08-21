@@ -1,3 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="common_horizontal_margin">16dp</dimen>
+    <dimen name="common_vertical_margin">16dp</dimen>
+    <dimen name="common_padding">10dp</dimen>
+    <dimen name="common_list_icon_size">24dp</dimen>
+
+    <dimen name="ticker_column_width">90dp</dimen>
+
+    <dimen name="details_expanded_toolbar_height">200dp</dimen>
+    <dimen name="details_icon_size">32dp</dimen>
+
+    <dimen name="textsize_small">8sp</dimen>
+    <dimen name="textsize_medium">12sp</dimen>
+    <dimen name="textsize_large">16sp</dimen>
 </resources>
