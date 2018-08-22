@@ -16,4 +16,10 @@
         <item name="android:textColor">@color/whiteAccent</item>
     </style>
 
+    <style name="SearchViewStyle" parent="AppTheme">
+        <item name="android:textColorHint">@color/whiteAccent</item>
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:background">@drawable/search_rounded_background</item>
+    </style>
+
 </resources>

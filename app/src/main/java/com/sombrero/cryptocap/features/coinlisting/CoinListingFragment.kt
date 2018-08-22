@@ -5,14 +5,18 @@ import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
 import android.content.Context
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.support.constraint.ConstraintSet
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.sombrero.cryptocap.R
 import com.sombrero.cryptocap.common.ActivityNavigator
 import com.sombrero.cryptocap.common.InjectorUtils
@@ -50,6 +54,7 @@ class CoinListingFragment : Fragment() {
         viewModel = ViewModelProviders.of(this, factory).get(CoinListingViewModel::class.java)
 
         val searchView = view.findViewById<SearchView>(R.id.coinListingSearchView)
+        val searchBackgroundView = view.findViewById<FrameLayout>(R.id.coinListingSearchBackgroundView)
         val recyclerView = view.findViewById<RecyclerView>(R.id.coinListingRecyclerView)
 
         searchView.setIconifiedByDefault(false)
@@ -66,6 +71,14 @@ class CoinListingFragment : Fragment() {
             }
 
         })
+
+        view as ConstraintLayout
+        searchView.setOnQueryTextFocusChangeListener { _, focused ->
+            when (focused) {
+                true -> animateSearchView(view, searchBackgroundView, searchView)
+                false -> reverseAnimateSearchView(view, searchBackgroundView, searchView)
+            }
+        }
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -89,6 +102,34 @@ class CoinListingFragment : Fragment() {
         viewModel.onSearchText(filter)
 
         viewModel.getCoins().observe(viewLifecycleOwner, listObserver)
+    }
+
+    private fun animateSearchView(constraintLayout: ConstraintLayout, backgroundView: FrameLayout, searchView: SearchView) {
+
+        val constraint = ConstraintSet()
+        constraint.clone(constraintLayout)
+        constraint.connect(backgroundView.id, ConstraintSet.START, searchView.id, ConstraintSet.START, 0)
+        constraint.connect(backgroundView.id, ConstraintSet.END, searchView.id, ConstraintSet.END, 0)
+        constraint.connect(backgroundView.id, ConstraintSet.BOTTOM, searchView.id, ConstraintSet.BOTTOM, 0)
+        constraint.connect(backgroundView.id, ConstraintSet.TOP, searchView.id, ConstraintSet.TOP, 0)
+
+        TransitionManager.beginDelayedTransition(backgroundView)
+        constraint.applyTo(constraintLayout)
+    }
+
+    private fun reverseAnimateSearchView(constraintLayout: ConstraintLayout, backgroundView: FrameLayout, searchView: SearchView) {
+
+        val margin = resources.getDimension(R.dimen.search_box_margin)
+
+        val constraint = ConstraintSet()
+        constraint.clone(constraintLayout)
+        constraint.connect(backgroundView.id, ConstraintSet.START, searchView.id, ConstraintSet.START, margin.toInt())
+        constraint.connect(backgroundView.id, ConstraintSet.END, searchView.id, ConstraintSet.END, margin.toInt())
+        constraint.connect(backgroundView.id, ConstraintSet.BOTTOM, searchView.id, ConstraintSet.BOTTOM, margin.toInt())
+        constraint.connect(backgroundView.id, ConstraintSet.TOP, searchView.id, ConstraintSet.TOP, margin.toInt())
+
+        TransitionManager.beginDelayedTransition(backgroundView)
+        constraint.applyTo(constraintLayout)
     }
 
     companion object {
