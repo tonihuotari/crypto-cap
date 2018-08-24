@@ -30,7 +30,6 @@ class CoinDetailsViewHolder(val view: View) {
     val supplyView: TextView = view.findViewById(R.id.detailsMaxSupplyView)
 
     fun bindView(coin: TickerCoin) {
-
         iconView.setBackgroundResource(coin.symbolToIconId())
         titleView.text = coin.formattedName()
         priceView.text = formatPriceText(view.context, coin)
@@ -40,7 +39,6 @@ class CoinDetailsViewHolder(val view: View) {
         supplyView.text = CoinUtils.formatAmount(coin.maxSupply, postfix = coin.symbol)
 
         String.format("%.0f %s", coin.maxSupply, coin.symbol)
-
     }
 
     private fun formatPriceText(context: Context, coin: TickerCoin): SpannableString {

@@ -23,10 +23,10 @@ class DetailsFragmentViewHolder(val view: View) {
     private val toolbar = view.findViewById<Toolbar>(R.id.detailsToolbar)
     private val toolbarTitleView = view.findViewById<TextView>(R.id.detailsToolbarTitleView)
     private val collapsingImageView = view.findViewById<ImageView>(R.id.detailsCollapsingImageView)
+    private val detailsProgressBarContainer = view.findViewById<View>(R.id.detailsProgressBarContainer)
 
     val bottomContainer = view.findViewById<FrameLayout>(R.id.detailsContainerView)
     val detailsFAB = view.findViewById<FloatingActionButton>(R.id.detailsFAB)
-
 
     init {
         initCollapsingToolbar(view.context, scrollView,
@@ -40,6 +40,7 @@ class DetailsFragmentViewHolder(val view: View) {
     fun bindView(coin: TickerCoin) {
         collapsingImageView.setBackgroundResource(coin.symbolToToolbarId())
         toolbarTitleView.text = coin.formattedName()
+        detailsProgressBarContainer.visibility = View.GONE
     }
 
     private fun initCollapsingToolbar(context: Context,
