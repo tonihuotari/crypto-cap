@@ -31,6 +31,7 @@ class DetailsFragmentViewHolder(val view: View) {
     init {
         initCollapsingToolbar(view.context, scrollView,
                 toolbar, toolbarTitleView, collapsingImageView)
+        collapsingImageView.setBackgroundResource(R.drawable.toolbar_placeholder)
     }
 
     fun bindView(starredCoin: StarredCoin?) {

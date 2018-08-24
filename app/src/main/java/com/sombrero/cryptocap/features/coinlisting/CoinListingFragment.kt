@@ -1,5 +1,6 @@
 package com.sombrero.cryptocap.features.coinlisting
 
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
@@ -46,6 +47,13 @@ class CoinListingFragment : Fragment() {
         adapter.navigator = null
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        // Clearing focus when leaving the view in order to prevent keyboard from showing up automatically when returning
+        view?.findViewById<SearchView>(R.id.coinListingSearchView)?.clearFocus()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_coinlisting, container, false)
         val context = context ?: return view
@@ -57,6 +65,10 @@ class CoinListingFragment : Fragment() {
         val searchBackgroundView = view.findViewById<FrameLayout>(R.id.coinListingSearchBackgroundView)
         val recyclerView = view.findViewById<RecyclerView>(R.id.coinListingRecyclerView)
 
+        view.findViewById<View>(R.id.coinListingProgressBarContainer).let {
+            subscribeProgressView(it)
+        }
+
         searchView.setIconifiedByDefault(false)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -66,7 +78,7 @@ class CoinListingFragment : Fragment() {
             }
 
             override fun onQueryTextChange(text: String?): Boolean {
-                subscribeUi(text)
+                subscribeUi(text?.trim())
                 return true
             }
 
@@ -74,10 +86,10 @@ class CoinListingFragment : Fragment() {
 
         view as ConstraintLayout
         searchView.setOnQueryTextFocusChangeListener { _, focused ->
-            when (focused) {
-                true -> animateSearchView(view, searchBackgroundView, searchView)
-                false -> reverseAnimateSearchView(view, searchBackgroundView, searchView)
-            }
+            // Only animate if we are in a resumed state
+            val animate = viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED
+
+            setSearchViewConstraints(view, searchBackgroundView, searchView, animate, reverse = !focused)
         }
 
         recyclerView.adapter = adapter
@@ -93,6 +105,12 @@ class CoinListingFragment : Fragment() {
         unsubscribeUi()
     }
 
+    private fun subscribeProgressView(progressView: View) {
+        viewModel.getCoins().observe(viewLifecycleOwner, Observer { coins ->
+            progressView.visibility = coins?.let { View.GONE } ?: View.VISIBLE
+        })
+    }
+
     private fun unsubscribeUi() {
         viewModel.getCoins().removeObserver(listObserver)
     }
@@ -104,31 +122,30 @@ class CoinListingFragment : Fragment() {
         viewModel.getCoins().observe(viewLifecycleOwner, listObserver)
     }
 
-    private fun animateSearchView(constraintLayout: ConstraintLayout, backgroundView: FrameLayout, searchView: SearchView) {
+    private fun setSearchViewConstraints(
+            constraintLayout: ConstraintLayout,
+            backgroundView: FrameLayout,
+            searchView: SearchView,
+            animate: Boolean,
+            reverse: Boolean = false) {
+
+        Log.e(TAG, "Current state: " + viewLifecycleOwner.lifecycle.currentState)
+        val margin: Int =
+                if (reverse) resources.getDimension(R.dimen.search_box_margin).toInt()
+                else 0
 
         val constraint = ConstraintSet()
         constraint.clone(constraintLayout)
-        constraint.connect(backgroundView.id, ConstraintSet.START, searchView.id, ConstraintSet.START, 0)
-        constraint.connect(backgroundView.id, ConstraintSet.END, searchView.id, ConstraintSet.END, 0)
-        constraint.connect(backgroundView.id, ConstraintSet.BOTTOM, searchView.id, ConstraintSet.BOTTOM, 0)
-        constraint.connect(backgroundView.id, ConstraintSet.TOP, searchView.id, ConstraintSet.TOP, 0)
+        constraint.connect(backgroundView.id, ConstraintSet.START, searchView.id, ConstraintSet.START, margin)
+        constraint.connect(backgroundView.id, ConstraintSet.END, searchView.id, ConstraintSet.END, margin)
+        constraint.connect(backgroundView.id, ConstraintSet.BOTTOM, searchView.id, ConstraintSet.BOTTOM, margin)
+        constraint.connect(backgroundView.id, ConstraintSet.TOP, searchView.id, ConstraintSet.TOP, margin)
 
-        TransitionManager.beginDelayedTransition(backgroundView)
-        constraint.applyTo(constraintLayout)
-    }
 
-    private fun reverseAnimateSearchView(constraintLayout: ConstraintLayout, backgroundView: FrameLayout, searchView: SearchView) {
+        if (animate) {
+            TransitionManager.beginDelayedTransition(backgroundView)
+        }
 
-        val margin = resources.getDimension(R.dimen.search_box_margin)
-
-        val constraint = ConstraintSet()
-        constraint.clone(constraintLayout)
-        constraint.connect(backgroundView.id, ConstraintSet.START, searchView.id, ConstraintSet.START, margin.toInt())
-        constraint.connect(backgroundView.id, ConstraintSet.END, searchView.id, ConstraintSet.END, margin.toInt())
-        constraint.connect(backgroundView.id, ConstraintSet.BOTTOM, searchView.id, ConstraintSet.BOTTOM, margin.toInt())
-        constraint.connect(backgroundView.id, ConstraintSet.TOP, searchView.id, ConstraintSet.TOP, margin.toInt())
-
-        TransitionManager.beginDelayedTransition(backgroundView)
         constraint.applyTo(constraintLayout)
     }
 

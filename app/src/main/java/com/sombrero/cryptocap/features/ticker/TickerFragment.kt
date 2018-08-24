@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.UiThread
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,11 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.sombrero.cryptocap.R
 import com.sombrero.cryptocap.common.ActivityNavigator
-import com.sombrero.cryptocap.common.BaseActivity
-import com.sombrero.cryptocap.common.FragmentNavigator
 import com.sombrero.cryptocap.common.InjectorUtils
 import com.sombrero.cryptocap.features.ticker.list.TickerAdapter
-import com.sombrero.cryptoclient.CryptoClient
 
 class TickerFragment : Fragment() {
 
@@ -42,6 +38,10 @@ class TickerFragment : Fragment() {
         val factory = InjectorUtils.provideTickerViewModelFactory(context)
         viewModel = ViewModelProviders.of(this, factory).get(TickerViewModel::class.java)
 
+        view.findViewById<View>(R.id.tickerProgressBarContainer).let {
+            subscribeProgressView(it)
+        }
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.tickerRecyclerView)
 
         recyclerView.adapter = adapter
@@ -50,6 +50,12 @@ class TickerFragment : Fragment() {
         subscribeUi(adapter)
 
         return view
+    }
+
+    private fun subscribeProgressView(progressView: View) {
+        viewModel.getTicker().observe(viewLifecycleOwner, Observer { coins ->
+            progressView.visibility = coins?.let { View.GONE } ?: View.VISIBLE
+        })
     }
 
     private fun subscribeUi(adapter: TickerAdapter) {
