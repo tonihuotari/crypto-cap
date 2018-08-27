@@ -1,4 +1,3 @@
 package com.sombrero.cryptoclient.apimodels
 
-class ApiCoinListing(val data: List<ApiCoin>) {
-}
+class ApiCoinListing(val data: List<ApiCoin>)

@@ -12,7 +12,8 @@
     <ImageView
         android:id="@+id/starredItemIconView"
         android:layout_width="@dimen/common_list_icon_size_large"
-        android:layout_height="@dimen/common_list_icon_size_large" />
+        android:layout_height="@dimen/common_list_icon_size_large"
+        tools:src="@drawable/ic_coin_placeholder" />
 
     <TextView
         android:id="@+id/starredItemTitleView"
