@@ -3,9 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-
-
+    compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
@@ -27,12 +25,11 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
-
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    implementation "io.reactivex.rxjava2:rxandroid:$rxjavaVersion"
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    api "com.android.support:appcompat-v7:$supportLibraryVersion"
+    api "io.reactivex.rxjava2:rxandroid:$rxjavaVersion"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 }

@@ -5,9 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
-
-
+    compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
@@ -29,18 +27,16 @@ android {
 }
 
 dependencies {
-    kapt "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    kapt "android.arch.persistence.room:compiler:$roomVersion"
 
     implementation project(":cryptoclient")
 
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxjavaVersion"
-
-    api "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
-    api "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    api "android.arch.paging:runtime:$rootProject.pagingVersion"
-
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    api "android.arch.lifecycle:extensions:$lifecycleVersion"
+    api "android.arch.persistence.room:runtime:$roomVersion"
+    api "android.arch.paging:runtime:$pagingVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

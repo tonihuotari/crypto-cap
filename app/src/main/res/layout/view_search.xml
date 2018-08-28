@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/searchConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/searchBackgroundView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/search_box_margin"
+        android:background="@color/colorPrimaryDark"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toBottomOf="@+id/searchSearchView"
+        app:layout_constraintEnd_toEndOf="@+id/searchSearchView"
+        app:layout_constraintStart_toStartOf="@+id/searchSearchView"
+        app:layout_constraintTop_toTopOf="@+id/searchSearchView" />
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/searchSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/SearchViewStyle"
+        app:closeIcon="@drawable/ic_close_white_20dp"
+        app:queryBackground="@color/transparent"
+        app:queryHint="@string/title_search"
+        app:searchIcon="@drawable/ic_search_white_24dp" />
+
+</android.support.constraint.ConstraintLayout>

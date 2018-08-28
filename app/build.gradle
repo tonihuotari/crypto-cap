@@ -4,7 +4,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.compileSdkVersion
+
     defaultConfig {
         applicationId "com.sombrero.cryptocap"
         minSdkVersion rootProject.minSdkVersion
