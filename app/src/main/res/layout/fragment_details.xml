@@ -65,12 +65,15 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/detailsFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/detailsAnimationButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_star"
+        android:background="@drawable/fab_background"
+        android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:lottie_fileName="fab_star_animation.json" />
+
 </android.support.constraint.ConstraintLayout>

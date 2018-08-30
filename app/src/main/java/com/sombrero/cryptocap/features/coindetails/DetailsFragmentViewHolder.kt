@@ -2,7 +2,6 @@ package com.sombrero.cryptocap.features.coindetails
 
 import android.animation.ArgbEvaluator
 import android.content.Context
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import com.airbnb.lottie.LottieAnimationView
 import com.sombrero.cryptocap.R
 import com.sombrero.cryptocap.extensions.formattedName
 import com.sombrero.cryptocap.extensions.symbolToToolbarId
@@ -26,7 +26,9 @@ class DetailsFragmentViewHolder(val view: View) {
     private val detailsProgressBarContainer = view.findViewById<View>(R.id.detailsProgressBarContainer)
 
     val bottomContainer = view.findViewById<FrameLayout>(R.id.detailsContainerView)
-    val detailsFAB = view.findViewById<FloatingActionButton>(R.id.detailsFAB)
+    val favoriteButton = view.findViewById<LottieAnimationView>(R.id.detailsAnimationButton)
+
+    var firstInit = true
 
     init {
         initCollapsingToolbar(view.context, scrollView,
@@ -34,14 +36,37 @@ class DetailsFragmentViewHolder(val view: View) {
         collapsingImageView.setBackgroundResource(R.drawable.toolbar_placeholder)
     }
 
-    fun bindView(starredCoin: StarredCoin?) {
-        detailsFAB.isSelected = starredCoin != null
-    }
-
     fun bindView(coin: TickerCoin) {
         collapsingImageView.setBackgroundResource(coin.symbolToToolbarId())
         toolbarTitleView.text = coin.formattedName()
         detailsProgressBarContainer.visibility = View.GONE
+    }
+
+    fun bindView(starredCoin: StarredCoin?) {
+        val wasSelected = favoriteButton.isSelected
+        favoriteButton.isSelected = starredCoin != null
+
+        if (firstInit) {
+            // Preventing animation when entering view if was already starred
+            favoriteButton.pauseAnimation()
+            favoriteButton.progress = if (favoriteButton.isSelected) 1F else 0F
+            firstInit = false
+        } else if (wasSelected != favoriteButton.isSelected) {
+            // Starred: animate
+            starringChanged()
+        }
+    }
+
+    private fun starringChanged() {
+        // TODO credit: https://www.lottiefiles.com/marvey
+        if (favoriteButton.isSelected) {
+            // Starred: animate
+            favoriteButton.playAnimation()
+        } else {
+            // Not starred: Set star to position of first frame
+            favoriteButton.pauseAnimation()
+            favoriteButton.progress = 0F
+        }
     }
 
     private fun initCollapsingToolbar(context: Context,
@@ -61,6 +86,7 @@ class DetailsFragmentViewHolder(val view: View) {
     }
 
     companion object {
+        val TAG = DetailsFragmentViewHolder::class.java.simpleName
         fun newInstance(inflater: LayoutInflater, container: ViewGroup?): DetailsFragmentViewHolder {
             val view = inflater.inflate(R.layout.fragment_details, container, false)
             return DetailsFragmentViewHolder(view)

@@ -26,9 +26,9 @@ class DetailsFragment : Fragment() {
         val detailsViewHolder = CoinDetailsViewHolder.newInstance(fragmentViewHolder.bottomContainer)
         subscribeUi(detailsViewHolder, fragmentViewHolder)
 
-        fragmentViewHolder.detailsFAB.setOnClickListener {
+        fragmentViewHolder.favoriteButton.setOnClickListener {
 
-            if (fragmentViewHolder.detailsFAB.isSelected) {
+            if (fragmentViewHolder.favoriteButton.isSelected) {
                 viewModel.unstarCoin()
             } else {
                 viewModel.starCoin()
